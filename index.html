@@ -13,6 +13,7 @@
     justify-content:center;
     align-items:center;
     overflow:hidden;
+    flex-direction:column;
   }
   .container{text-align:center;position:relative;}
   .heart{
@@ -27,6 +28,7 @@
     display:flex;justify-content:center;align-items:center;
     flex-direction:column;font-size:1.6rem;color:#ff4f81;
     opacity:0;pointer-events:none;transition:opacity 2s ease;
+    z-index:10;
   }
   .overlay.show{opacity:1;pointer-events:auto;}
   .overlay.hide{opacity:0;pointer-events:none;}
@@ -42,6 +44,9 @@
   }
   @keyframes float{
     0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}
+  }
+  iframe {
+    width:0;height:0;border:0;visibility:hidden;
   }
 </style>
 </head>
@@ -71,18 +76,15 @@ I’ll do everything to make things right—because I love you, always. 💖`;
     heart.style.display='none';
     overlay.classList.add('show');
 
-    // Add YouTube iframe after click
+    // Play YouTube audio (Wish 107.5 version)
     const yt=document.createElement('iframe');
-    yt.width=0;yt.height=0;yt.src="https://www.youtube.com/embed/boJ5-z1mUwY?autoplay=1&mute=0&start=5";
-    yt.allow="autoplay";
+    yt.src="https://www.youtube.com/embed/boJ5-z1mUwY?autoplay=1&start=5&playsinline=1";
+    yt.allow="autoplay; encrypted-media";
     document.body.appendChild(yt);
 
-    // fade overlay slowly as song starts
-    setTimeout(()=>{
-      overlay.classList.add('hide');
-    },4000);
-
-    // show message typing after fade
+    // Fade out overlay slowly
+    setTimeout(()=>{ overlay.classList.add('hide'); },4000);
+    // Show message after fade
     setTimeout(()=>{
       overlay.style.display='none';
       typeMessage(msgText,0);
