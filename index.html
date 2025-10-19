@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Babi Elyziah 💖</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+  body{
+    height:100vh;
+    background:linear-gradient(180deg,#fbeaff,#e0c3fc);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+  }
+  .container{text-align:center;position:relative;}
+  .heart{
+    font-size:70px;color:#ff4f81;cursor:pointer;animation:pulse 1.5s infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}
+  }
+  .overlay{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(255,255,255,0.9);
+    display:flex;justify-content:center;align-items:center;
+    flex-direction:column;font-size:1.6rem;color:#ff4f81;
+    opacity:0;pointer-events:none;transition:opacity 2s ease;
+  }
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .overlay.hide{opacity:0;pointer-events:none;}
+  .message{
+    max-width:90%;margin:auto;
+    color:#333;font-size:1.2rem;line-height:1.8rem;
+    white-space:pre-line;text-align:center;
+    display:none;
+  }
+  .cat{
+    width:120px;margin:20px auto;
+    animation:float 3s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="heart" id="heart">💖</div>
+  <div class="message" id="message"></div>
+  <img class="cat" src="https://cdn.jsdelivr.net/gh/justkato/assets/cute-cat.gif" alt="cat">
+</div>
+
+<div class="overlay" id="overlay">
+  <div>For Elyziah 💖<br><small>Just listen…</small></div>
+</div>
+
+<script>
+  const heart=document.getElementById('heart');
+  const overlay=document.getElementById('overlay');
+  const messageBox=document.getElementById('message');
+  const msgText=`Sorry for everything, I will fix it. 
+I love you, my babi Elyziah. 
+I know I’ve made mistakes, and I’m truly sorry for the pain I caused. 
+You mean so much to me, more than I can ever explain. 
+Thank you for staying, for understanding, for being my heart’s home. 
+I’ll do everything to make things right—because I love you, always. 💖`;
+
+  heart.addEventListener('click',()=>{
+    heart.style.display='none';
+    overlay.classList.add('show');
+
+    // Add YouTube iframe after click
+    const yt=document.createElement('iframe');
+    yt.width=0;yt.height=0;yt.src="https://www.youtube.com/embed/boJ5-z1mUwY?autoplay=1&mute=0&start=5";
+    yt.allow="autoplay";
+    document.body.appendChild(yt);
+
+    // fade overlay slowly as song starts
+    setTimeout(()=>{
+      overlay.classList.add('hide');
+    },4000);
+
+    // show message typing after fade
+    setTimeout(()=>{
+      overlay.style.display='none';
+      typeMessage(msgText,0);
+    },6000);
+  });
+
+  function typeMessage(text,i){
+    messageBox.style.display='block';
+    if(i<text.length){
+      messageBox.innerHTML=text.substring(0,i+1);
+      setTimeout(()=>typeMessage(text,i+1),60);
+    }
+  }
+</script>
+</body>
+</html>
