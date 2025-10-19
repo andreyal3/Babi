@@ -8,12 +8,13 @@
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
   body{
     height:100vh;
-    background:linear-gradient(180deg,#fbeaff,#e0c3fc);
+    background:linear-gradient(135deg,#fbeaff,#e0c3fc,#fcb1ff);
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
     flex-direction:column;
+    transition:background 5s ease;
   }
   .container{text-align:center;position:relative;}
   .heart{
@@ -45,14 +46,20 @@
   @keyframes float{
     0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}
   }
-  iframe {
-    width:0;height:0;border:0;visibility:hidden;
+  .ytframe{
+    width:300px;height:170px;
+    border:none;border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    opacity:0;transition:opacity 2s ease;
+    margin-top:10px;
   }
+  .ytframe.show{opacity:1;}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="heart" id="heart">💖</div>
+  <iframe class="ytframe" id="yt" src="" allow="autoplay; encrypted-media"></iframe>
   <div class="message" id="message"></div>
   <img class="cat" src="https://cdn.jsdelivr.net/gh/justkato/assets/cute-cat.gif" alt="cat">
 </div>
@@ -62,42 +69,42 @@
 </div>
 
 <script>
-  const heart=document.getElementById('heart');
-  const overlay=document.getElementById('overlay');
-  const messageBox=document.getElementById('message');
-  const msgText=`Sorry for everything, I will fix it. 
+const heart=document.getElementById('heart');
+const overlay=document.getElementById('overlay');
+const messageBox=document.getElementById('message');
+const yt=document.getElementById('yt');
+const msgText=`Sorry for everything, I will fix it. 
 I love you, my babi Elyziah. 
 I know I’ve made mistakes, and I’m truly sorry for the pain I caused. 
 You mean so much to me, more than I can ever explain. 
 Thank you for staying, for understanding, for being my heart’s home. 
 I’ll do everything to make things right—because I love you, always. 💖`;
 
-  heart.addEventListener('click',()=>{
-    heart.style.display='none';
-    overlay.classList.add('show');
+heart.addEventListener('click',()=>{
+  heart.style.display='none';
+  overlay.classList.add('show');
 
-    // Play YouTube audio (Wish 107.5 version)
-    const yt=document.createElement('iframe');
-    yt.src="https://www.youtube.com/embed/boJ5-z1mUwY?autoplay=1&start=5&playsinline=1";
-    yt.allow="autoplay; encrypted-media";
-    document.body.appendChild(yt);
+  // load visible YouTube player
+  yt.src="https://www.youtube.com/embed/boJ5-z1mUwY?autoplay=1&playsinline=1";
+  yt.classList.add('show');
 
-    // Fade out overlay slowly
-    setTimeout(()=>{ overlay.classList.add('hide'); },4000);
-    // Show message after fade
-    setTimeout(()=>{
-      overlay.style.display='none';
-      typeMessage(msgText,0);
-    },6000);
-  });
+  // fade overlay slowly as song starts
+  setTimeout(()=>{ overlay.classList.add('hide'); },4000);
 
-  function typeMessage(text,i){
-    messageBox.style.display='block';
-    if(i<text.length){
-      messageBox.innerHTML=text.substring(0,i+1);
-      setTimeout(()=>typeMessage(text,i+1),60);
-    }
+  // start message typing after fade
+  setTimeout(()=>{
+    overlay.style.display='none';
+    typeMessage(msgText,0);
+  },6000);
+});
+
+function typeMessage(text,i){
+  messageBox.style.display='block';
+  if(i<text.length){
+    messageBox.innerHTML=text.substring(0,i+1);
+    setTimeout(()=>typeMessage(text,i+1),60);
   }
+}
 </script>
 </body>
 </html>
